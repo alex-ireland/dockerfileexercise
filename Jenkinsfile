@@ -1,16 +1,29 @@
 pipeline {
-	agent any
-	stages {
-		stage('init') {
-			stepts {
-				sh "docker rm -f $(docker ps -qa) || true"
-				sh "docker network create new-network || true"
-			}
-		}
-		stage('build')
-			steps {
-				sh 'docker build -t flask-app .'
-				sh 'docker build -t mynginx -f Dockerfile.nginx .'
+
+    agent any
+
+    stages {
+
+         stage('Init') {
+
+            steps {
+
+                sh 'docker rm -f $(docker ps -qa) || true'
+
+                sh 'docker network create new-network || true'
+
+            }
+
+        }
+
+        stage('Build') {
+
+            steps {
+
+                sh 'docker build -t flask-app .'
+
+                sh 'docker build -t mynginx -f Dockerfile.nginx .'
+
             }
 
         }
@@ -30,4 +43,3 @@ pipeline {
     }
 
 }
-		
